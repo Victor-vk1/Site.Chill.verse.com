@@ -2,200 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chillverse Login</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body {
-  margin:0;
-  font-family:'Montserrat', sans-serif;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background: radial-gradient(ellipse at bottom, #0a0f2e 0%, #000000 100%);
-  overflow:hidden;
-  position:relative;
-  color:#e0f7ff;
-}
+  body {
+    margin:0;
+    padding:0;
+    font-family:'Poppins', sans-serif;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #0d0d0f, #1a1a24);
+    overflow:hidden;
+    color:#0ff;
+  }
 
-.bubble {
-  position:absolute;
-  bottom:-100px;
-  width:20px;
-  height:20px;
-  background: rgba(0,255,255,0.15);
-  border-radius:50%;
-  animation: rise linear infinite;
-  box-shadow: 0 0 15px rgba(0,255,255,0.5);
-}
-@keyframes rise {
-  0% { transform: translateY(0) scale(0.5); opacity:0.5; }
-  50% { opacity:1; }
-  100% { transform: translateY(-110vh) scale(1); opacity:0; }
-}
+  /* Greeting text */
+  .greeting {
+    text-align:center;
+    font-size:28px;
+    text-shadow:0 0 10px #0ff;
+    margin-bottom:5px;
+  }
 
-#login-panel {
-  width: 380px;
-  padding: 35px;
-  border-radius: 28px;
-  backdrop-filter: blur(25px);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(0,255,255,0.25);
-  box-shadow: 0 0 35px rgba(0,255,255,0.3), inset 0 0 25px rgba(0,255,255,0.1);
-  text-align:center;
-  z-index:10;
-  position:relative;
-}
-#header {
-  font-size:2.4em;
-  font-weight:700;
-  color:#7fffd4;
-  text-shadow: 0 0 8px #00ffff, 0 0 15px rgba(0,255,255,0.6);
-  margin-bottom:20px;
-}
+  .subtext {
+    font-size:14px;
+    color:#a0f0ff;
+    margin-bottom:20px;
+  }
 
-input {
-  width:240px;
-  padding:12px;
-  border:none;
-  border-radius:14px;
-  outline:none;
-  background: rgba(255,255,255,0.12);
-  color:#dff3ff;
-  font-size:1em;
-  margin-bottom:15px;
-  box-shadow: 0 0 10px rgba(0,255,255,0.2) inset;
-  border:1px solid rgba(255,255,255,0.2);
-}
-button {
-  padding:12px 25px;
-  border:none;
-  border-radius:16px;
-  cursor:pointer;
-  font-size:1.1em;
-  font-weight:600;
-  color:#fff;
-  background: rgba(0,255,255,0.28);
-  border:1px solid rgba(0,255,255,0.45);
-  box-shadow: 0 0 12px rgba(0,255,255,0.5), inset 0 0 10px rgba(0,255,255,0.4);
-  transition:.25s ease;
-}
-button:hover {
-  transform:scale(1.06);
-  box-shadow:0 0 25px rgba(0,255,255,0.7), inset 0 0 14px rgba(0,255,255,0.55);
-}
+  /* Floating bubbles */
+  .bubble {
+    position:absolute;
+    bottom:-50px;
+    width:20px;
+    height:20px;
+    background: rgba(0,255,255,0.3);
+    border-radius:50%;
+    animation: rise 10s infinite ease-in;
+  }
+  @keyframes rise {
+    0% {transform: translateY(0) scale(1);}
+    50% {transform: translateY(-300px) scale(1.2);}
+    100% {transform: translateY(-600px) scale(0.8);}
+  }
 
-#error-msg {
-  display:none;
-  padding:12px 20px;
-  border-radius:14px;
-  background: rgba(255,0,0,0.25);
-  color:#ff4040;
-  font-weight:700;
-  margin-bottom:15px;
-  box-shadow: 0 0 15px #ff0000;
-  animation: shake 0.5s ease;
-}
-@keyframes shake {
-  0% { transform:translateX(0); }
-  25% { transform:translateX(-8px); }
-  50% { transform:translateX(8px); }
-  75% { transform:translateX(-8px); }
-  100% { transform:translateX(0); }
-}
+  /* Glass login panel */
+  .glass-login {
+    position: relative;
+    width: 350px;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(25px);
+    border:1px solid rgba(0,255,255,0.3);
+    box-shadow:0 0 30px rgba(0,255,255,0.2);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    z-index:10;
+  }
 
-#greeting { margin:15px 0; font-weight:600; }
-.xp-bar { width:100%; height:24px; background: rgba(255,255,255,0.1); border-radius:14px; margin-top:10px; }
-.xp-fill { height:100%; background: linear-gradient(90deg, #00ffff, #00bfff); border-radius:14px; width:0%; transition: width 0.5s; }
-#level-display { margin-top:8px; font-weight:600; }
+  .glass-login input{
+    width:80%;
+    padding:10px 15px;
+    margin:10px 0;
+    border:none;
+    border-radius:12px;
+    background: rgba(0,255,255,0.1);
+    color:#0ff;
+    font-size:16px;
+  }
+
+  .glass-login input::placeholder{
+    color:#a0f0ff;
+  }
+
+  .glass-login button{
+    padding:10px 20px;
+    border:none;
+    border-radius:12px;
+    background: rgba(0,255,255,0.2);
+    color:#0ff;
+    font-weight:500;
+    margin-top:15px;
+    cursor:pointer;
+    transition:0.3s;
+  }
+
+  .glass-login button:hover{
+    background: rgba(0,255,255,0.4);
+    box-shadow:0 0 10px #0ff;
+  }
+
+  .error{
+    margin-top:10px;
+    color:#f00;
+    font-weight:bold;
+    text-align:center;
+    display:none;
+  }
 </style>
 </head>
 <body>
 
-<div id="login-panel">
-  <div id="header">Chillverse Login</div>
-  <div id="error-msg">Invalid username or password!</div>
-  <input id="username-input" type="text" placeholder="Username"><br>
-  <input id="password-input" type="password" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
-  <div id="greeting"></div>
-  <div id="level-display"></div>
-  <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+<!-- Dynamic greeting -->
+<div class="greeting" id="greetingText">Welcome!</div>
+<div class="subtext">Log in to access the site</div>
+
+<!-- Floating bubbles -->
+<div class="bubble" style="left:10%; animation-delay:0s;"></div>
+<div class="bubble" style="left:30%; animation-delay:2s;"></div>
+<div class="bubble" style="left:50%; animation-delay:4s;"></div>
+<div class="bubble" style="left:70%; animation-delay:1s;"></div>
+<div class="bubble" style="left:90%; animation-delay:3s;"></div>
+
+<div class="glass-login" id="loginPanel">
+  <input type="text" id="usernameInput" placeholder="Enter Username">
+  <input type="password" id="passwordInput" placeholder="Enter Password">
+  <button id="loginBtn">Login</button>
+  <div class="error" id="errorMsg">Invalid Username or Password</div>
 </div>
 
 <script>
-/* ===== FLOATING BUBBLES ===== */
-for(let i=0;i<40;i++){
-  const bubble = document.createElement("div");
-  bubble.classList.add("bubble");
-  bubble.style.width = bubble.style.height = (10+Math.random()*20)+"px";
-  bubble.style.left = Math.random()*100+"%";
-  bubble.style.animationDuration = 5+Math.random()*7+"s";
-  bubble.style.animationDelay = Math.random()*5+"s";
-  document.body.appendChild(bubble);
-}
+  const loginBtn = document.getElementById("loginBtn");
+  const errorMsg = document.getElementById("errorMsg");
+  const mainSiteURL = "https://sites.google.com/view/chillverse30-com/home";
 
-/* ===== LOGIN FUNCTIONALITY ===== */
-const HOME_URL = "https://sites.google.com/view/chillverse30-com/home";
-const SESSION_KEY = "loggedInSession";
-
-/* On page load, check if session exists */
-window.onload = function(){
-  if(localStorage.getItem(SESSION_KEY) === "true"){
-    window.location.href = HOME_URL;
+  // Set greeting based on time
+  const greetingText = document.getElementById("greetingText");
+  const hour = new Date().getHours();
+  if(hour < 12){
+    greetingText.textContent = "Good Morning!";
+  } else if(hour < 18){
+    greetingText.textContent = "Good Afternoon!";
+  } else{
+    greetingText.textContent = "Good Evening!";
   }
-}
 
-function login(){
-  const u = document.getElementById("username-input").value.trim();
-  const p = document.getElementById("password-input").value.trim();
-  const storedU = localStorage.getItem("username");
-  const storedP = localStorage.getItem("password");
+  // Check session on page load
+  window.onload = () => {
+    const session = JSON.parse(localStorage.getItem("session"));
+    if(session && session.expireTime > Date.now()){
+      window.location.href = mainSiteURL;
+    } else{
+      localStorage.removeItem("session");
+    }
+  };
 
-  if(!storedU || !storedP){
-    if(u.length<1 || p.length<1){ showError(); return;}
-    localStorage.setItem("username", u);
-    localStorage.setItem("password", p);
-    localStorage.setItem("level",1);
-    localStorage.setItem("xp",0);
-    startSession(u);
-  } else {
-    if(u===storedU && p===storedP){
-      startSession(u);
-    } else {
-      showError();
+  // Login button logic
+  loginBtn.addEventListener("click", ()=>{
+    const username = document.getElementById("usernameInput").value.trim();
+    const password = document.getElementById("passwordInput").value.trim();
+
+    if(username && password){
+      const expireTime = Date.now() + 60*60*1000; // 1 hour
+      localStorage.setItem("session", JSON.stringify({username, expireTime}));
+      localStorage.setItem("username", username); // reference for daily reward
+      window.location.href = mainSiteURL;
+    } else{
+      errorMsg.style.display="block";
+      setTimeout(()=>{errorMsg.style.display="none";}, 2000);
+    }
+  });
+
+  // Reset session on activity
+  function resetTimer(){
+    const session = JSON.parse(localStorage.getItem("session"));
+    if(session){
+      session.expireTime = Date.now() + 60*60*1000;
+      localStorage.setItem("session", JSON.stringify(session));
     }
   }
-}
+  document.addEventListener("mousemove", resetTimer);
+  document.addEventListener("keydown", resetTimer);
 
-function showError(){
-  const msg=document.getElementById("error-msg");
-  msg.style.display="block";
-  setTimeout(()=>{msg.style.display="none"},2000);
-}
-
-function startSession(username){
-  localStorage.setItem(SESSION_KEY,"true");
-
-  // time-based greeting
-  const hour=new Date().getHours();
-  const greet = hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
-  document.getElementById("greeting").innerText=`${greet}, ${username}!`;
-
-  const level = localStorage.getItem("level")||1;
-  const xp = localStorage.getItem("xp")||12;
-  document.getElementById("level-display").innerText=`Level ${level}`;
-  document.getElementById("xp-fill").style.width = xp+"%";
-
-  setTimeout(()=>{ window.location.href=HOME_URL; },1000);
-}
-
-/* Basic DevTools deterrent */
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if(e.key==="F12" || (e.ctrlKey && e.shiftKey && e.key==="I")) e.preventDefault();
-});
 </script>
-
 </body>
 </html>
+
