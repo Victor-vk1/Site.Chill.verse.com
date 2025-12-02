@@ -5,116 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chillverse Login</title>
 <style>
-  body {
-    margin:0;
-    padding:0;
-    font-family:'Poppins', sans-serif;
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background: linear-gradient(135deg, #0d0d0f, #1a1a24);
-    overflow:hidden;
-    color:#0ff;
-  }
+body {
+  margin:0;
+  padding:0;
+  font-family:'Poppins', sans-serif;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg, #0d0d0f, #1a1a24);
+  overflow:hidden;
+  color:#0ff;
+}
 
-  /* Floating bubbles */
-  .bubble {
-    position:absolute;
-    bottom:-50px;
-    width:20px;
-    height:20px;
-    background: rgba(0,255,255,0.3);
-    border-radius:50%;
-    animation: rise 12s infinite ease-in;
-  }
-  @keyframes rise {
-    0% {transform: translateY(0) scale(1);}
-    50% {transform: translateY(-300px) scale(1.2);}
-    100% {transform: translateY(-600px) scale(0.8);}
-  }
+/* Floating bubbles */
+.bubble {
+  position:absolute;
+  bottom:-50px;
+  width:20px;
+  height:20px;
+  background: rgba(0,255,255,0.3);
+  border-radius:50%;
+  animation: rise 12s infinite ease-in;
+}
+@keyframes rise {
+  0% {transform: translateY(0) scale(1);}
+  50% {transform: translateY(-300px) scale(1.2);}
+  100% {transform: translateY(-600px) scale(0.8);}
+}
 
-  /* Floating Chillverse title */
-  .title {
-    font-size: 48px;
-    font-weight: bold;
-    text-shadow: 0 0 20px #0ff;
-    animation: floatTitle 4s ease-in-out infinite alternate;
-  }
-  @keyframes floatTitle {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-15px); }
-  }
+/* Floating Chillverse title with neon color cycle */
+.title {
+  font-size: 48px;
+  font-weight: bold;
+  text-shadow: 0 0 20px #0ff;
+  animation: floatTitle 4s ease-in-out infinite alternate,
+             colorCycle 14s linear infinite;
+}
 
-  .greeting {
-    text-align:center;
-    font-size:28px;
-    text-shadow:0 0 10px #0ff;
-    margin:10px 0 5px 0;
-  }
+@keyframes floatTitle {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
 
-  .subtext {
-    font-size:14px;
-    color:#a0f0ff;
-    margin-bottom:20px;
-  }
+@keyframes colorCycle {
+  0%   { color: #00ff00; text-shadow: 0 0 20px #00ff00; } /* Green */
+  14%  { color: #ffff00; text-shadow: 0 0 20px #ffff00; } /* Yellow */
+  28%  { color: #ff7f00; text-shadow: 0 0 20px #ff7f00; } /* Orange */
+  42%  { color: #ff0000; text-shadow: 0 0 20px #ff0000; } /* Red */
+  57%  { color: #ff00ff; text-shadow: 0 0 20px #ff00ff; } /* Pink */
+  71%  { color: #8000ff; text-shadow: 0 0 20px #8000ff; } /* Purple */
+  85%  { color: #00bfff; text-shadow: 0 0 20px #00bfff; } /* Blue */
+  100% { color: #00ff00; text-shadow: 0 0 20px #00ff00; } /* Back to Green */
+}
 
-  /* Glass login panel */
-  .glass-login {
-    position: relative;
-    width: 350px;
-    padding: 40px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(25px);
-    border:1px solid rgba(0,255,255,0.3);
-    box-shadow:0 0 30px rgba(0,255,255,0.2);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    z-index:10;
-  }
+.greeting {
+  text-align:center;
+  font-size:28px;
+  text-shadow:0 0 10px #0ff;
+  margin:10px 0 5px 0;
+}
+.subtext {
+  font-size:14px;
+  color:#a0f0ff;
+  margin-bottom:20px;
+}
 
-  .glass-login input{
-    width:80%;
-    padding:10px 15px;
-    margin:10px 0;
-    border:none;
-    border-radius:12px;
-    background: rgba(0,255,255,0.1);
-    color:#0ff;
-    font-size:16px;
-  }
+/* Glass login panel */
+.glass-login {
+  position: relative;
+  width: 350px;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  border:1px solid rgba(0,255,255,0.3);
+  box-shadow:0 0 30px rgba(0,255,255,0.2);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:10;
+}
 
-  .glass-login input::placeholder{
-    color:#a0f0ff;
-  }
+.glass-login input{
+  width:80%;
+  padding:10px 15px;
+  margin:10px 0;
+  border:none;
+  border-radius:12px;
+  background: rgba(0,255,255,0.1);
+  color:#0ff;
+  font-size:16px;
+}
 
-  .glass-login button{
-    padding:10px 20px;
-    border:none;
-    border-radius:12px;
-    background: rgba(0,255,255,0.2);
-    color:#0ff;
-    font-weight:500;
-    margin-top:15px;
-    cursor:pointer;
-    transition:0.3s;
-  }
+.glass-login input::placeholder{
+  color:#a0f0ff;
+}
 
-  .glass-login button:hover{
-    background: rgba(0,255,255,0.4);
-    box-shadow:0 0 10px #0ff;
-  }
+.glass-login button{
+  padding:10px 20px;
+  border:none;
+  border-radius:12px;
+  background: rgba(0,255,255,0.2);
+  color:#0ff;
+  font-weight:500;
+  margin-top:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-  .error{
-    margin-top:10px;
-    color:#f00;
-    font-weight:bold;
-    text-align:center;
-    display:none;
-  }
+.glass-login button:hover{
+  background: rgba(0,255,255,0.4);
+  box-shadow:0 0 10px #0ff;
+}
+
+.error, .success{
+  margin-top:10px;
+  font-weight:bold;
+  text-align:center;
+  display:none;
+}
+
+.error { color:#f00; }
+.success { color:#0f0; }
+
+/* Collapsible top-right menu */
+#collapsibleMenu {
+  position: absolute;
+  top:20px;
+  right:20px;
+  color:#0ff;
+  cursor:pointer;
+  user-select:none;
+}
+
+#menuContent {
+  display:none;
+  position:absolute;
+  top:30px;
+  right:0;
+  background: rgba(0,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding:10px;
+  border-radius:10px;
+  flex-direction:column;
+}
+#menuContent button{
+  margin:5px 0;
+  background: rgba(0,255,255,0.2);
+}
 </style>
 </head>
 <body>
@@ -133,65 +173,154 @@
 <div class="greeting" id="greetingText">Welcome!</div>
 <div class="subtext">Log in to access Chillverse</div>
 
+<!-- Collapsible menu -->
+<div id="collapsibleMenu">⚙️ Menu
+  <div id="menuContent">
+    <button id="setPassBtn">Set Password</button>
+    <button id="changePassBtn">Change Password</button>
+  </div>
+</div>
+
 <!-- Glass login panel -->
 <div class="glass-login" id="loginPanel">
   <input type="text" id="usernameInput" placeholder="Enter Username">
   <input type="password" id="passwordInput" placeholder="Enter Password">
   <button id="loginBtn">Login</button>
   <div class="error" id="errorMsg">Invalid Username or Password</div>
+  <div class="success" id="successMsg">Password Changed Successfully</div>
 </div>
 
 <script>
-  const loginBtn = document.getElementById("loginBtn");
-  const errorMsg = document.getElementById("errorMsg");
-  const mainSiteURL = "https://sites.google.com/view/chillverse30-com/home";
+const mainSiteURL = "https://sites.google.com/view/chillverse30-com/home";
+const loginBtn = document.getElementById("loginBtn");
+const errorMsg = document.getElementById("errorMsg");
+const successMsg = document.getElementById("successMsg");
 
-  // Dynamic greeting
-  const greetingText = document.getElementById("greetingText");
-  const hour = new Date().getHours();
-  if(hour < 12){
-    greetingText.textContent = "Good Morning!";
-  } else if(hour < 18){
-    greetingText.textContent = "Good Afternoon!";
+const greetingText = document.getElementById("greetingText");
+const hour = new Date().getHours();
+if(hour < 12) greetingText.textContent = "Good Morning!";
+else if(hour < 18) greetingText.textContent = "Good Afternoon!";
+else greetingText.textContent = "Good Evening!";
+
+// Collapsible
+const collapsible = document.getElementById("collapsibleMenu");
+const menuContent = document.getElementById("menuContent");
+collapsible.onclick = ()=> menuContent.style.display = menuContent.style.display==="flex"?"none":"flex";
+
+// Password functions
+const setPassBtn = document.getElementById("setPassBtn");
+const changePassBtn = document.getElementById("changePassBtn");
+
+// Track failed attempts
+const maxAttempts = 3;
+
+// Session check
+window.onload = ()=>{
+  const session = JSON.parse(sessionStorage.getItem("session"));
+  if(session && session.expireTime > Date.now()){
+    window.location.href = mainSiteURL;
+  } else sessionStorage.removeItem("session");
+}
+
+// Login logic
+loginBtn.addEventListener("click", ()=>{
+  const username = document.getElementById("usernameInput").value.trim();
+  const password = document.getElementById("passwordInput").value.trim();
+  if(!username || !password){
+    showError("Enter username & password");
+    return;
+  }
+  let stored = JSON.parse(localStorage.getItem(username));
+  stored = stored || {password:null, attempts:0};
+
+  if(!stored.password){
+    // First time: save password
+    stored.password = password;
+    stored.attempts = 0;
+    localStorage.setItem(username, JSON.stringify(stored));
+    startSession(username);
   } else{
-    greetingText.textContent = "Good Evening!";
-  }
-
-  // Check session on page load
-  window.onload = () => {
-    const session = JSON.parse(sessionStorage.getItem("session")); // sessionStorage clears on browser close
-    if(session && session.expireTime > Date.now()){
-      window.location.href = mainSiteURL;
+    // Password exists: check
+    if(password === stored.password){
+      stored.attempts = 0;
+      localStorage.setItem(username, JSON.stringify(stored));
+      startSession(username);
     } else{
-      sessionStorage.removeItem("session");
-    }
-  };
-
-  loginBtn.addEventListener("click", ()=>{
-    const username = document.getElementById("usernameInput").value.trim();
-    const password = document.getElementById("passwordInput").value.trim();
-
-    if(username && password){
-      const expireTime = Date.now() + 60*60*1000; // 1 hour
-      sessionStorage.setItem("session", JSON.stringify({username, expireTime})); // cleared on close
-      sessionStorage.setItem("username", username); // reference for daily reward page
-      window.location.href = mainSiteURL;
-    } else{
-      errorMsg.style.display="block";
-      setTimeout(()=>{errorMsg.style.display="none";}, 2000);
-    }
-  });
-
-  // Reset session on activity
-  function resetTimer(){
-    const session = JSON.parse(sessionStorage.getItem("session"));
-    if(session){
-      session.expireTime = Date.now() + 60*60*1000;
-      sessionStorage.setItem("session", JSON.stringify(session));
+      stored.attempts++;
+      localStorage.setItem(username, JSON.stringify(stored));
+      if(stored.attempts >= maxAttempts){
+        showError("Contact admin to reset password");
+      } else showError("Invalid Username or Password");
     }
   }
-  document.addEventListener("mousemove", resetTimer);
-  document.addEventListener("keydown", resetTimer);
+});
+
+// Set Password
+setPassBtn.onclick = ()=>{
+  const username = document.getElementById("usernameInput").value.trim();
+  if(!username){
+    showError("Enter username first");
+    return;
+  }
+  const newPass = prompt("Set your password:");
+  if(newPass){
+    const stored = JSON.parse(localStorage.getItem(username)) || {attempts:0};
+    stored.password = newPass;
+    stored.attempts = 0;
+    localStorage.setItem(username, JSON.stringify(stored));
+    showSuccess("Password set successfully");
+  }
+}
+
+// Change Password
+changePassBtn.onclick = ()=>{
+  const username = document.getElementById("usernameInput").value.trim();
+  if(!username){
+    showError("Enter username first");
+    return;
+  }
+  const stored = JSON.parse(localStorage.getItem(username));
+  if(!stored || !stored.password){
+    showError("No password set. Use Set Password first.");
+    return;
+  }
+  const newPass = prompt("Enter new password:");
+  if(newPass){
+    stored.password = newPass;
+    stored.attempts = 0;
+    localStorage.setItem(username, JSON.stringify(stored));
+    showSuccess("Password changed successfully");
+  }
+}
+
+// Helper functions
+function startSession(username){
+  const expireTime = Date.now()+60*60*1000; // 1 hour
+  sessionStorage.setItem("session", JSON.stringify({username, expireTime}));
+  sessionStorage.setItem("username", username);
+  window.location.href = mainSiteURL;
+}
+function showError(msg){
+  errorMsg.textContent = msg;
+  errorMsg.style.display="block";
+  setTimeout(()=>{errorMsg.style.display="none";},2000);
+}
+function showSuccess(msg){
+  successMsg.textContent = msg;
+  successMsg.style.display="block";
+  setTimeout(()=>{successMsg.style.display="none";},2000);
+}
+
+// Reset session timer on activity
+function resetTimer(){
+  const session = JSON.parse(sessionStorage.getItem("session"));
+  if(session){
+    session.expireTime = Date.now() + 60*60*1000;
+    sessionStorage.setItem("session", JSON.stringify(session));
+  }
+}
+document.addEventListener("mousemove", resetTimer);
+document.addEventListener("keydown", resetTimer);
 </script>
 </body>
 </html>
