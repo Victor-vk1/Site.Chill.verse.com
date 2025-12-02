@@ -3,325 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chillverse Login</title>
+<title>ChillVerse Login</title>
+
 <style>
-body {
-  margin:0;
-  padding:0;
-  font-family:'Poppins', sans-serif;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background: linear-gradient(135deg, #0d0d0f, #1a1a24);
-  overflow:hidden;
-  color:#0ff;
-}
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
 
-/* Floating bubbles */
-.bubble {
-  position:absolute;
-  bottom:-50px;
-  width:20px;
-  height:20px;
-  background: rgba(0,255,255,0.3);
-  border-radius:50%;
-  animation: rise 12s infinite ease-in;
-}
-@keyframes rise {
-  0% {transform: translateY(0) scale(1);}
-  50% {transform: translateY(-300px) scale(1.2);}
-  100% {transform: translateY(-600px) scale(0.8);}
-}
+    /* Floating bubbles */
+    .bubble {
+        position: absolute;
+        bottom: -200px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 255, 255, 0.3);
+        border-radius: 50%;
+        animation: rise 10s infinite ease-in;
+        filter: blur(3px);
+    }
 
-/* Floating Chillverse title with neon color cycle */
-.title {
-  font-size: 48px;
-  font-weight: bold;
-  text-shadow: 0 0 20px #0ff;
-  animation: floatTitle 4s ease-in-out infinite alternate,
-             colorCycle 14s linear infinite;
-}
+    @keyframes rise {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
 
-@keyframes floatTitle {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-15px); }
-}
+    /* Login Glass Card */
+    .glass-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        padding: 25px;
+        border-radius: 20px;
+        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.06);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+    }
 
-@keyframes colorCycle {
-  0%   { color: #00ff00; text-shadow: 0 0 20px #00ff00; } /* Green */
-  14%  { color: #ffff00; text-shadow: 0 0 20px #ffff00; } /* Yellow */
-  28%  { color: #ff7f00; text-shadow: 0 0 20px #ff7f00; } /* Orange */
-  42%  { color: #ff0000; text-shadow: 0 0 20px #ff0000; } /* Red */
-  57%  { color: #ff00ff; text-shadow: 0 0 20px #ff00ff; } /* Pink */
-  71%  { color: #8000ff; text-shadow: 0 0 20px #8000ff; } /* Purple */
-  85%  { color: #00bfff; text-shadow: 0 0 20px #00bfff; } /* Blue */
-  100% { color: #00ff00; text-shadow: 0 0 20px #00ff00; } /* Back to Green */
-}
+    /* Neon ChillVerse */
+    .title {
+        font-size: 32px;
+        font-weight: bold;
+        animation: neon 4s linear infinite;
+    }
 
-.greeting {
-  text-align:center;
-  font-size:28px;
-  text-shadow:0 0 10px #0ff;
-  margin:10px 0 5px 0;
-}
-.subtext {
-  font-size:14px;
-  color:#a0f0ff;
-  margin-bottom:20px;
-}
+    @keyframes neon {
+        0% { color: #00ff99; text-shadow: 0 0 10px #00ff99; }
+        16% { color: yellow; text-shadow: 0 0 10px yellow; }
+        32% { color: orange; text-shadow: 0 0 10px orange; }
+        48% { color: red; text-shadow: 0 0 10px red; }
+        64% { color: pink; text-shadow: 0 0 10px pink; }
+        80% { color: purple; text-shadow: 0 0 10px purple; }
+        100% { color: cyan; text-shadow: 0 0 10px cyan; }
+    }
 
-/* Glass login panel */
-.glass-login {
-  position: relative;
-  width: 350px;
-  padding: 40px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(25px);
-  border:1px solid rgba(0,255,255,0.3);
-  box-shadow:0 0 30px rgba(0,255,255,0.2);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  z-index:10;
-}
+    input {
+        width: 80%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+    }
 
-.glass-login input{
-  width:80%;
-  padding:10px 15px;
-  margin:10px 0;
-  border:none;
-  border-radius:12px;
-  background: rgba(0,255,255,0.1);
-  color:#0ff;
-  font-size:16px;
-}
+    button {
+        width: 85%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: cyan;
+        font-size: 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
 
-.glass-login input::placeholder{
-  color:#a0f0ff;
-}
+    .error {
+        color: red;
+        margin-top: 10px;
+        animation: flash 0.2s alternate 6;
+    }
 
-.glass-login button{
-  padding:10px 20px;
-  border:none;
-  border-radius:12px;
-  background: rgba(0,255,255,0.2);
-  color:#0ff;
-  font-weight:500;
-  margin-top:15px;
-  cursor:pointer;
-  transition:0.3s;
-}
+    @keyframes flash {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
 
-.glass-login button:hover{
-  background: rgba(0,255,255,0.4);
-  box-shadow:0 0 10px #0ff;
-}
-
-.error, .success{
-  margin-top:10px;
-  font-weight:bold;
-  text-align:center;
-  display:none;
-}
-
-.error { color:#f00; }
-.success { color:#0f0; }
-
-/* Collapsible top-right menu */
-#collapsibleMenu {
-  position: absolute;
-  top:20px;
-  right:20px;
-  color:#0ff;
-  cursor:pointer;
-  user-select:none;
-}
-
-#menuContent {
-  display:none;
-  position:absolute;
-  top:30px;
-  right:0;
-  background: rgba(0,255,255,0.1);
-  backdrop-filter: blur(15px);
-  padding:10px;
-  border-radius:10px;
-  flex-direction:column;
-}
-#menuContent button{
-  margin:5px 0;
-  background: rgba(0,255,255,0.2);
-}
 </style>
 </head>
 <body>
 
-<!-- Floating bubbles -->
-<div class="bubble" style="left:10%; animation-delay:0s;"></div>
-<div class="bubble" style="left:30%; animation-delay:2s;"></div>
-<div class="bubble" style="left:50%; animation-delay:4s;"></div>
-<div class="bubble" style="left:70%; animation-delay:1s;"></div>
-<div class="bubble" style="left:90%; animation-delay:3s;"></div>
+<!-- Floating Bubble Generator -->
+<script>
+for (let i = 0; i < 25; i++) {
+    let b = document.createElement("div");
+    b.className = "bubble";
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.animationDuration = (8 + Math.random() * 6) + "s";
+    b.style.width = b.style.height = (20 + Math.random() * 40) + "px";
+    document.body.appendChild(b);
+}
+</script>
 
-<!-- Floating title -->
-<div class="title">Chillverse</div>
+<div class="glass-card" id="loginCard">
+    <div class="title">ChillVerse</div>
+    <p id="subtext">Log in to access ChillVerse</p>
 
-<!-- Greeting and subtext -->
-<div class="greeting" id="greetingText">Welcome!</div>
-<div class="subtext">Log in to access Chillverse</div>
+    <div id="usernameSection">
+        <input type="text" id="setUsername" placeholder="Set Username">
+        <button onclick="saveUsername()">Save Username</button>
+    </div>
 
-<!-- Collapsible menu -->
-<div id="collapsibleMenu">⚙️ Menu
-  <div id="menuContent">
-    <button id="setPassBtn">Set Password</button>
-    <button id="changePassBtn">Change Password</button>
-  </div>
+    <div id="passwordSection">
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <p id="errorBox"></p>
+
+    <button onclick="showPasswordChange()" id="changePassBtn" style="margin-top:15px; display:none;">Change Password</button>
 </div>
 
-<!-- Glass login panel -->
-<div class="glass-login" id="loginPanel">
-  <input type="text" id="usernameInput" placeholder="Enter Username">
-  <input type="password" id="passwordInput" placeholder="Enter Password">
-  <button id="loginBtn">Login</button>
-  <div class="error" id="errorMsg">Invalid Username or Password</div>
-  <div class="success" id="successMsg">Password Changed Successfully</div>
+
+<!-- Password Change UI -->
+<div class="glass-card" id="changePassCard" style="display:none;">
+    <h3>Change Password</h3>
+    <input type="password" id="oldPass" placeholder="Old Password">
+    <input type="password" id="newPass" placeholder="New Password">
+    <button onclick="changePassword()">Confirm</button>
+    <button onclick="closeChange()" style="background:red;">Cancel</button>
+    <p id="changeMsg"></p>
 </div>
 
 <script>
-const mainSiteURL = "https://sites.google.com/view/chillverse30-com/home";
-const loginBtn = document.getElementById("loginBtn");
-const errorMsg = document.getElementById("errorMsg");
-const successMsg = document.getElementById("successMsg");
+let tries = 0;
 
-const greetingText = document.getElementById("greetingText");
-const hour = new Date().getHours();
-if(hour < 12) greetingText.textContent = "Good Morning!";
-else if(hour < 18) greetingText.textContent = "Good Afternoon!";
-else greetingText.textContent = "Good Evening!";
-
-// Collapsible
-const collapsible = document.getElementById("collapsibleMenu");
-const menuContent = document.getElementById("menuContent");
-collapsible.onclick = ()=> menuContent.style.display = menuContent.style.display==="flex"?"none":"flex";
-
-// Password functions
-const setPassBtn = document.getElementById("setPassBtn");
-const changePassBtn = document.getElementById("changePassBtn");
-
-// Track failed attempts
-const maxAttempts = 3;
-
-// Session check
-window.onload = ()=>{
-  const session = JSON.parse(sessionStorage.getItem("session"));
-  if(session && session.expireTime > Date.now()){
-    window.location.href = mainSiteURL;
-  } else sessionStorage.removeItem("session");
-}
-
-// Login logic
-loginBtn.addEventListener("click", ()=>{
-  const username = document.getElementById("usernameInput").value.trim();
-  const password = document.getElementById("passwordInput").value.trim();
-  if(!username || !password){
-    showError("Enter username & password");
-    return;
-  }
-  let stored = JSON.parse(localStorage.getItem(username));
-  stored = stored || {password:null, attempts:0};
-
-  if(!stored.password){
-    // First time: save password
-    stored.password = password;
-    stored.attempts = 0;
-    localStorage.setItem(username, JSON.stringify(stored));
-    startSession(username);
-  } else{
-    // Password exists: check
-    if(password === stored.password){
-      stored.attempts = 0;
-      localStorage.setItem(username, JSON.stringify(stored));
-      startSession(username);
-    } else{
-      stored.attempts++;
-      localStorage.setItem(username, JSON.stringify(stored));
-      if(stored.attempts >= maxAttempts){
-        showError("Contact admin to reset password");
-      } else showError("Invalid Username or Password");
+// Hide username section if already set
+window.onload = () => {
+    if (localStorage.getItem("cv_username")) {
+        document.getElementById("usernameSection").style.display = "none";
     }
-  }
-});
+    if (localStorage.getItem("cv_password")) {
+        document.getElementById("passwordInput").placeholder = "Enter Password";
+    }
+};
 
-// Set Password
-setPassBtn.onclick = ()=>{
-  const username = document.getElementById("usernameInput").value.trim();
-  if(!username){
-    showError("Enter username first");
-    return;
-  }
-  const newPass = prompt("Set your password:");
-  if(newPass){
-    const stored = JSON.parse(localStorage.getItem(username)) || {attempts:0};
-    stored.password = newPass;
-    stored.attempts = 0;
-    localStorage.setItem(username, JSON.stringify(stored));
-    showSuccess("Password set successfully");
-  }
+// Save Username Permanently
+function saveUsername() {
+    let name = document.getElementById("setUsername").value.trim();
+    if (name === "") return;
+
+    localStorage.setItem("cv_username", name);
+    document.getElementById("usernameSection").style.display = "none";
 }
 
-// Change Password
-changePassBtn.onclick = ()=>{
-  const username = document.getElementById("usernameInput").value.trim();
-  if(!username){
-    showError("Enter username first");
-    return;
-  }
-  const stored = JSON.parse(localStorage.getItem(username));
-  if(!stored || !stored.password){
-    showError("No password set. Use Set Password first.");
-    return;
-  }
-  const newPass = prompt("Enter new password:");
-  if(newPass){
-    stored.password = newPass;
-    stored.attempts = 0;
-    localStorage.setItem(username, JSON.stringify(stored));
-    showSuccess("Password changed successfully");
-  }
+// Login System
+function login() {
+    let input = document.getElementById("passwordInput").value;
+    let savedPass = localStorage.getItem("cv_password");
+
+    // First time password setup
+    if (!savedPass) {
+        localStorage.setItem("cv_password", input);
+        alert("Password Set Successfully!");
+        return;
+    }
+
+    if (input !== savedPass) {
+        tries++;
+        document.getElementById("errorBox").innerHTML = "Wrong Password!";
+        if (tries >= 5) {
+            document.getElementById("errorBox").innerHTML = "Too many attempts. Contact admin for reset.";
+        }
+        return;
+    }
+
+    // Correct password
+    location.href = "main.html"; // your main site link
 }
 
-// Helper functions
-function startSession(username){
-  const expireTime = Date.now()+60*60*1000; // 1 hour
-  sessionStorage.setItem("session", JSON.stringify({username, expireTime}));
-  sessionStorage.setItem("username", username);
-  window.location.href = mainSiteURL;
-}
-function showError(msg){
-  errorMsg.textContent = msg;
-  errorMsg.style.display="block";
-  setTimeout(()=>{errorMsg.style.display="none";},2000);
-}
-function showSuccess(msg){
-  successMsg.textContent = msg;
-  successMsg.style.display="block";
-  setTimeout(()=>{successMsg.style.display="none";},2000);
+// Show password change panel
+function showPasswordChange() {
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("changePassCard").style.display = "block";
 }
 
-// Reset session timer on activity
-function resetTimer(){
-  const session = JSON.parse(sessionStorage.getItem("session"));
-  if(session){
-    session.expireTime = Date.now() + 60*60*1000;
-    sessionStorage.setItem("session", JSON.stringify(session));
-  }
+// Change password
+function changePassword() {
+    let oldP = document.getElementById("oldPass").value;
+    let newP = document.getElementById("newPass").value;
+    let saved = localStorage.getItem("cv_password");
+
+    if (oldP !== saved) {
+        document.getElementById("changeMsg").innerHTML = "Incorrect old password!";
+        return;
+    }
+
+    localStorage.setItem("cv_password", newP);
+    document.getElementById("changeMsg").innerHTML = "Password changed successfully!";
 }
-document.addEventListener("mousemove", resetTimer);
-document.addEventListener("keydown", resetTimer);
+
+// Close password change panel
+function closeChange() {
+    document.getElementById("changePassCard").style.display = "none";
+    document.getElementById("loginCard").style.display = "block";
+}
 </script>
+
 </body>
 </html>
-
